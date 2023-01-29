@@ -1,6 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
-import { IQueryDTO } from '../../interfaces';
 import { errors, celebrate, Joi } from 'celebrate';
 import Logger from '../../loaders/logger';
 import QueryService from '../../services/query';
@@ -15,15 +14,15 @@ export default (app: Router) => {
     '/',
     celebrate({
       body: Joi.object({
-        command: Joi.string().required(),
-        fvmAddress: Joi.string().default(null),
+        command: Joi.string().required()
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
-      Logger.debug('Calling with body: %o', req.body);
+      Logger.debug('Calling with command: %o', req.body.command);
       try {
         const queryInstance = Container.get(QueryService);
-        const response = await queryInstance.solveQuery(req.body as IQueryDTO);
+        const response = await queryInstance.solveQuery(req.body.command);
+        console.log(response.result);
         return res.status(201).json(response);
       } catch (e) {
         Logger.error('🔥 error: %o', e);

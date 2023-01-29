@@ -19,4 +19,10 @@ export default {
   api: {
     prefix: '/api',
   },
+  // Bot Name
+  bot: 'FVM HyperSpace Bot',
+  // Provider
+  provider: process.env.FVM_PROVIDER,
+  // Unit
+  unit: 'TFIL'
 };
