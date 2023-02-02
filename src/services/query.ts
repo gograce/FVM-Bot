@@ -83,13 +83,13 @@ export default class QueryService {
       return { success: true, result: `Latest Block of ${config.network} Network:\t${latestBlock}`, err: null };
     } catch (err) {
       console.log(err);
-      return { success: false, result: null, err: 'Unable to get Transaction Count 😖' };
+      return { success: false, result: null, err: 'Unable to get Latest Block 😖' };
     }
   };
 
   private crBalance = async (commandArgs: string[]) => {
     try {
-      const provider = new ethers.providers.JsonRpcProvider(config.provider);
+      const provider = new ethers.providers.JsonRpcProvider(config.provider, config.chainId);
       const balance: any = await provider.getBalance(commandArgs[2]);
       return { success: true, result: `Balance:\t${balance / 1e18} ${config.unit}`, err: null };
     } catch (err) {
