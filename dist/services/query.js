@@ -47,7 +47,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var typedi_1 = require("typedi");
 var config_1 = __importDefault(require("../config"));
-var ethers_1 = __importDefault(require("ethers"));
+var ethers_1 = require("ethers");
 var QueryService = /** @class */ (function () {
     function QueryService() {
         var _this = this;
@@ -68,7 +68,7 @@ var QueryService = /** @class */ (function () {
         this.crDefault = function () {
             return { success: false, result: null, err: 'This is not a valid command 😕 !!!' };
         };
-        this.crIntro = function (commandArgs) {
+        this.crIntro = function () {
             return {
                 success: true,
                 result: "Hi There !\n".concat(config_1.default.bot, " is at ur service \uD83E\uDDDE\u200D\u2642\uFE0F\nSend \t/list\tto get a list of all supported commands"),
@@ -83,20 +83,62 @@ var QueryService = /** @class */ (function () {
             });
             return { success: true, result: result, err: null };
         };
-        this.crBalance = function (commandArgs) { return __awaiter(_this, void 0, void 0, function () {
-            var provider, balance, err_1;
+        this.crChainId = function (commandArgs) {
+            return { success: true, result: "ChainId of ".concat(config_1.default.network, " Network:\t").concat(config_1.default.chainId), err: null };
+        };
+        this.crLatestBlock = function (commandArgs) { return __awaiter(_this, void 0, void 0, function () {
+            var provider, latestBlock, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        provider = new ethers_1.default.providers.JsonRpcProvider(config_1.default.provider);
+                        provider = new ethers_1.ethers.providers.JsonRpcProvider(config_1.default.provider);
+                        return [4 /*yield*/, provider.getBlockNumber()];
+                    case 1:
+                        latestBlock = _a.sent();
+                        return [2 /*return*/, { success: true, result: "Latest Block of ".concat(config_1.default.network, " Network:\t").concat(latestBlock), err: null }];
+                    case 2:
+                        err_1 = _a.sent();
+                        console.log(err_1);
+                        return [2 /*return*/, { success: false, result: null, err: 'Unable to get Transaction Count 😖' }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.crBalance = function (commandArgs) { return __awaiter(_this, void 0, void 0, function () {
+            var provider, balance, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        provider = new ethers_1.ethers.providers.JsonRpcProvider(config_1.default.provider);
                         return [4 /*yield*/, provider.getBalance(commandArgs[2])];
                     case 1:
                         balance = _a.sent();
                         return [2 /*return*/, { success: true, result: "Balance:\t".concat(balance / 1e18, " ").concat(config_1.default.unit), err: null }];
                     case 2:
-                        err_1 = _a.sent();
+                        err_2 = _a.sent();
+                        console.log(err_2);
                         return [2 /*return*/, { success: false, result: null, err: 'Unable to get Balance 😖' }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.crTxCount = function (commandArgs) { return __awaiter(_this, void 0, void 0, function () {
+            var provider, txCount, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        provider = new ethers_1.ethers.providers.JsonRpcProvider(config_1.default.provider);
+                        return [4 /*yield*/, provider.getTransactionCount(commandArgs[2])];
+                    case 1:
+                        txCount = _a.sent();
+                        return [2 /*return*/, { success: true, result: "Transaction Count:\t".concat(txCount), err: null }];
+                    case 2:
+                        err_3 = _a.sent();
+                        console.log(err_3);
+                        return [2 /*return*/, { success: false, result: null, err: 'Unable to get Transaction Count 😖' }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -112,10 +154,25 @@ var QueryService = /** @class */ (function () {
                 usage: '/list',
                 func: this.crList,
             },
+            chainId: {
+                desc: 'List the chainId of the current network',
+                usage: '/chainId',
+                func: this.crChainId,
+            },
+            latestBlock: {
+                desc: 'List the latest block of current network',
+                usage: '/latestBlock',
+                func: this.crLatestBlock,
+            },
             balance: {
                 desc: 'List balance of an Account',
                 usage: '/balance/<EVM_COMPATIBLE_ADDRESS>',
                 func: this.crBalance,
+            },
+            txCount: {
+                desc: 'List transaction count of an Account',
+                usage: '/txCount/<EVM_COMPATIBLE_ADDRESS>',
+                func: this.crTxCount,
             },
         };
     }

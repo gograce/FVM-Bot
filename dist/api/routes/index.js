@@ -50,7 +50,7 @@ exports.default = (function (app) {
     app.use(route);
     route.post('/', (0, celebrate_1.celebrate)({
         body: celebrate_1.Joi.object({
-            command: celebrate_1.Joi.string().required()
+            command: celebrate_1.Joi.string().required(),
         }),
     }), function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
         var queryInstance, response, e_1;

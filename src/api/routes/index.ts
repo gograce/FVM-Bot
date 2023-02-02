@@ -14,7 +14,7 @@ export default (app: Router) => {
     '/',
     celebrate({
       body: Joi.object({
-        command: Joi.string().required()
+        command: Joi.string().required(),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {

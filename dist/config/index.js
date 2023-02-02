@@ -27,5 +27,9 @@ exports.default = {
     // Provider
     provider: process.env.FVM_PROVIDER,
     // Unit
-    unit: 'TFIL'
+    unit: 'TFIL',
+    //Newtwork
+    network: 'Filecoin - HyperSpace Testnet',
+    //chainId
+    chainId: 3141,
 };

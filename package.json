@@ -15,7 +15,7 @@
     "ts.check",
     "build",
     "add-build"
-],
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint"
