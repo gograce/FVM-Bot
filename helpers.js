@@ -10,7 +10,6 @@ const getPgpKey = async () => {
 			account: botAddr,
 			env: "prod",
 		});
-		console.log(botAccPvtKey);
 		const decryptedPvtKey = mmSDK.decrypt({
 			encryptedData: JSON.parse(user.encryptedPrivateKey),
 			privateKey: botAccPvtKey,
