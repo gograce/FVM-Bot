@@ -89,7 +89,8 @@ export default class QueryService {
 
   private crBalance = async (commandArgs: string[]) => {
     try {
-      const provider = new ethers.providers.JsonRpcProvider(config.provider, config.chainId);
+      console.log(config.provider);
+      const provider = new ethers.providers.JsonRpcProvider(config.provider);
       const balance: any = await provider.getBalance(commandArgs[2]);
       return { success: true, result: `Balance:\t${balance / 1e18} ${config.unit}`, err: null };
     } catch (err) {

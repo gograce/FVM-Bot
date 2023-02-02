@@ -111,7 +111,8 @@ var QueryService = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        provider = new ethers_1.ethers.providers.JsonRpcProvider(config_1.default.provider, config_1.default.chainId);
+                        console.log(config_1.default.provider);
+                        provider = new ethers_1.ethers.providers.JsonRpcProvider(config_1.default.provider);
                         return [4 /*yield*/, provider.getBalance(commandArgs[2])];
                     case 1:
                         balance = _a.sent();
