@@ -100,7 +100,7 @@ var QueryService = /** @class */ (function () {
                     case 2:
                         err_1 = _a.sent();
                         console.log(err_1);
-                        return [2 /*return*/, { success: false, result: null, err: 'Unable to get Transaction Count 😖' }];
+                        return [2 /*return*/, { success: false, result: null, err: 'Unable to get Latest Block 😖' }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -111,7 +111,7 @@ var QueryService = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        provider = new ethers_1.ethers.providers.JsonRpcProvider(config_1.default.provider);
+                        provider = new ethers_1.ethers.providers.JsonRpcProvider(config_1.default.provider, config_1.default.chainId);
                         return [4 /*yield*/, provider.getBalance(commandArgs[2])];
                     case 1:
                         balance = _a.sent();
