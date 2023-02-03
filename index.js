@@ -9,6 +9,17 @@ const {
 } = require("./helpers");
 const { botAddr } = require("./config");
 const { decryptConversation } = require("./decrypt");
+const express = require("express");
+
+const app = express();
+
+app.get("/", (req, res) => {
+	res.send("Express on Vercel");
+});
+
+app.listen(5000, () => {
+	console.log("Running on port 5000.");
+});
 
 let pvtKey = "",
 	chatUser = {};
@@ -92,3 +103,6 @@ const main = () => {
 };
 
 main();
+
+// Export the Express API
+module.exports = app;
