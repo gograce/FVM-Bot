@@ -14,6 +14,7 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
+	main();
 	res.send("Express on Vercel");
 });
 
@@ -101,8 +102,6 @@ const main = () => {
 		console.log(err);
 	}
 };
-
-main();
 
 // Export the Express API
 module.exports = app;
