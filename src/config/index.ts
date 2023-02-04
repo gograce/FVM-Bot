@@ -29,4 +29,8 @@ export default {
   network: 'Filecoin - HyperSpace Testnet',
   //chainId
   chainId: 3141,
+  //evm address of bot
+  botAddr: '0x7B2880C0aC607cFea7cE67DAb0F8f562Cee73f76',
+  //bot private key
+  botAccPvtKey: process.env.PRIVATE_KEY || ""
 };

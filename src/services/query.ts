@@ -105,7 +105,6 @@ export default class QueryService {
       const txCount: any = await provider.getTransactionCount(commandArgs[2]);
       return { success: true, result: `Transaction Count:\t${txCount}`, err: null };
     } catch (err) {
-      console.log(err);
       return { success: false, result: null, err: 'Unable to get Transaction Count 😖' };
     }
   };
