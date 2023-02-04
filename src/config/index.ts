@@ -32,5 +32,5 @@ export default {
   //evm address of bot
   botAddr: '0x7B2880C0aC607cFea7cE67DAb0F8f562Cee73f76',
   //bot private key
-  botAccPvtKey: process.env.PRIVATE_KEY || ""
+  botAccPvtKey: process.env.PRIVATE_KEY || '',
 };
