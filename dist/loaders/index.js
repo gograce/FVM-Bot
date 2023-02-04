@@ -41,7 +41,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var logger_1 = __importDefault(require("./logger"));
 var express_1 = __importDefault(require("./express"));
-var socket_1 = __importDefault(require("./socket"));
 exports.default = (function (app) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -49,8 +48,6 @@ exports.default = (function (app) { return __awaiter(void 0, void 0, void 0, fun
             case 1:
                 _a.sent();
                 logger_1.default.info('Express loaded!');
-                (0, socket_1.default)();
-                logger_1.default.info('Sockets loaded!');
                 return [2 /*return*/];
         }
     });

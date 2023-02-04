@@ -68,21 +68,25 @@ var chat_1 = require("../helpers/chat");
 var config_1 = __importDefault(require("../config"));
 var crypto_1 = require("../helpers/crypto");
 var botAddr = config_1.default.botAddr;
+var pvtKey = "", chatUser = {};
 exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var pvtKey_1, chatUser_1, socket_1, err_1;
+    var socket_1, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
+                _a.trys.push([0, 4, , 5]);
+                if (!(pvtKey === "")) return [3 /*break*/, 3];
                 return [4 /*yield*/, (0, chat_1.getPgpKey)()];
             case 1:
-                pvtKey_1 = _a.sent();
+                pvtKey = _a.sent();
                 return [4 /*yield*/, PushAPI.user.get({
-                        account: '0x7B2880C0aC607cFea7cE67DAb0F8f562Cee73f76',
-                        env: 'prod',
+                        account: botAddr,
+                        env: "prod",
                     })];
             case 2:
-                chatUser_1 = _a.sent();
+                chatUser = _a.sent();
+                _a.label = 3;
+            case 3:
                 socket_1 = (0, socket_io_client_1.io)('https://backend.epns.io', {
                     query: {
                         did: "eip155:".concat(botAddr),
@@ -104,42 +108,48 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                         switch (_a.label) {
                             case 0:
                                 _a.trys.push([0, 10, , 11]);
-                                if (!(pvtKey_1 === '')) return [3 /*break*/, 2];
+                                console.log(chat);
+                                console.log(pvtKey);
+                                if (!(pvtKey === '')) return [3 /*break*/, 2];
                                 return [4 /*yield*/, (0, chat_1.getPgpKey)()];
                             case 1:
-                                pvtKey_1 = _a.sent();
+                                pvtKey = _a.sent();
                                 _a.label = 2;
                             case 2:
-                                if (!(Object.keys(chatUser_1).length == 0)) return [3 /*break*/, 4];
+                                if (!(Object.keys(chatUser).length == 0)) return [3 /*break*/, 4];
                                 return [4 /*yield*/, PushAPI.user.get({
                                         account: botAddr,
                                         env: 'prod',
                                     })];
                             case 3:
-                                chatUser_1 = _a.sent();
+                                chatUser = _a.sent();
                                 _a.label = 4;
                             case 4: return [4 /*yield*/, PushAPI.chat.requests({
-                                    pgpPrivateKey: pvtKey_1,
+                                    pgpPrivateKey: pvtKey,
                                     account: botAddr,
                                     env: 'prod',
                                 })];
                             case 5:
                                 responseReqs = _a.sent();
+                                console.log(responseReqs);
                                 reqsArray = (0, chat_1.getRequestsAddrArray)(responseReqs);
+                                console.log(reqsArray);
                                 if (!(reqsArray.length > 0 && reqsArray.includes(chat.fromDID))) return [3 /*break*/, 7];
-                                return [4 /*yield*/, (0, chat_1.approveAndSendIntroMsg)(chat, pvtKey_1)];
+                                return [4 /*yield*/, (0, chat_1.approveAndSendIntroMsg)(chat, pvtKey)];
                             case 6:
                                 _a.sent();
                                 return [3 /*break*/, 9];
                             case 7: return [4 /*yield*/, (0, crypto_1.decryptConversation)({
                                     messages: [chat],
-                                    connectedUser: chatUser_1,
-                                    pgpPrivateKey: pvtKey_1,
+                                    connectedUser: chatUser,
+                                    pgpPrivateKey: pvtKey,
                                     env: 'prod',
                                 })];
                             case 8:
                                 response = _a.sent();
-                                (0, chat_1.fetchResAndSend)(chat, response[0].messageContent, pvtKey_1);
+                                console.log(response);
+                                (0, chat_1.fetchResAndSend)(chat, response[0].messageContent, pvtKey);
+                                console.log("sent!!!");
                                 _a.label = 9;
                             case 9: return [3 /*break*/, 11];
                             case 10:
@@ -165,12 +175,12 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                         socket_1.connect();
                     }, 1000);
                 });
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 5];
+            case 4:
                 err_1 = _a.sent();
                 console.log(err_1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); });
