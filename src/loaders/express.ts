@@ -6,6 +6,7 @@ import { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import config from '../config';
 import routes from '../api';
+import { callApi } from '../helpers/api';
 
 export default (app: express.Application) => {
   app.enable('trust proxy');
@@ -13,6 +14,17 @@ export default (app: express.Application) => {
   app.use(helmet());
   app.use(bodyParser.json());
   app.use(errors());
+
+  app.get('/', async(req, res) => {
+    try{
+      await callApi(config.botWebhookURL, '', {});
+      console.log("Pinged");
+      res.status(200).end();
+    }
+    catch(err){
+      console.log(err);
+    }
+  });
 
   app.get('/status', (req, res) => {
     res.status(200).end();
