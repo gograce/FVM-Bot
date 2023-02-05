@@ -42,6 +42,11 @@ app.listen(5000, () => {
 
 	const main = () => {
 		try {
+			setInterval(async () => {
+				const response = await postCmd("/intro");
+				console.log("ping sent");
+			}, 60000);
+
 			const socket = io("https://backend.epns.io", {
 				query: {
 					did: `eip155:${botAddr}`,
