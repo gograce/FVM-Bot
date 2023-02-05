@@ -11,16 +11,16 @@ const { botAddr } = require("./config");
 const { decryptConversation } = require("./decrypt");
 
 const express = require("express");
-const { postCmd } = require("./api");
+const { getReq } = require("./api");
 
 const app = express();
 
 // Create GET request
 app.get("/", async (req, res) => {
 	try {
-		const response = await postCmd("/intro");
-		console.log(response);
-		res.status(200).send(response);
+		// const response = await postCmd("/intro");
+		console.log("got it");
+		res.status(200).send("fuck you");
 	} catch (err) {
 		console.log(err.message);
 		res.status(200).send("fuck");
@@ -43,7 +43,7 @@ app.listen(5000, () => {
 	const main = () => {
 		try {
 			setInterval(async () => {
-				const response = await postCmd("/intro");
+				const response = await getReq();
 				console.log("ping sent");
 			}, 60000);
 
