@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,21 +62,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var cron = __importStar(require("node-cron"));
+var api_1 = require("../helpers/api");
+var config_1 = __importDefault(require("../config"));
 var logger_1 = __importDefault(require("./logger"));
-var express_1 = __importDefault(require("./express"));
-var jobs_1 = __importDefault(require("./jobs"));
-exports.default = (function (app) { return __awaiter(void 0, void 0, void 0, function () {
+exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, express_1.default)(app)];
-            case 1:
-                _a.sent();
-                logger_1.default.info('Express loaded!');
-                // await socketConnection();
-                // Logger.info('Sockets loaded!');
-                (0, jobs_1.default)();
-                logger_1.default.info('Cron Jobs loaded!');
-                return [2 /*return*/];
-        }
+        // schedule the cron job to run every 5 minutes
+        // Hack to prevent webhook to go in sleep mode
+        cron.schedule('*/5 * * * *', function () { return __awaiter(void 0, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, (0, api_1.callApi)(config_1.default.botWebhookURL, '', {})];
+                    case 1:
+                        _a.sent();
+                        logger_1.default.info('Pinged Push Chat WebHook');
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        return [2 /*return*/];
     });
 }); });

@@ -68,20 +68,20 @@ var chat_1 = require("../helpers/chat");
 var config_1 = __importDefault(require("../config"));
 var crypto_1 = require("../helpers/crypto");
 var botAddr = config_1.default.botAddr;
-var pvtKey = "", chatUser = {};
+var pvtKey = '', chatUser = {};
 exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
     var socket_1, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 4, , 5]);
-                if (!(pvtKey === "")) return [3 /*break*/, 3];
+                if (!(pvtKey === '')) return [3 /*break*/, 3];
                 return [4 /*yield*/, (0, chat_1.getPgpKey)()];
             case 1:
                 pvtKey = _a.sent();
                 return [4 /*yield*/, PushAPI.user.get({
                         account: botAddr,
-                        env: "prod",
+                        env: 'prod',
                     })];
             case 2:
                 chatUser = _a.sent();
@@ -149,7 +149,7 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                                 response = _a.sent();
                                 console.log(response);
                                 (0, chat_1.fetchResAndSend)(chat, response[0].messageContent, pvtKey);
-                                console.log("sent!!!");
+                                console.log('sent!!!');
                                 _a.label = 9;
                             case 9: return [3 /*break*/, 11];
                             case 10:

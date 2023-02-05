@@ -39,21 +39,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var logger_1 = __importDefault(require("./logger"));
-var express_1 = __importDefault(require("./express"));
-var jobs_1 = __importDefault(require("./jobs"));
-exports.default = (function (app) { return __awaiter(void 0, void 0, void 0, function () {
+exports.callApi = void 0;
+var axios_1 = __importDefault(require("axios"));
+var callApi = function (url, token, body) { return __awaiter(void 0, void 0, void 0, function () {
+    var response, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, express_1.default)(app)];
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, axios_1.default.get(url, {
+                        headers: {
+                            accept: 'text/plain',
+                            authorization: "Bearer ".concat(token),
+                            'Content-Type': 'application/json',
+                        },
+                        data: body,
+                    })];
             case 1:
-                _a.sent();
-                logger_1.default.info('Express loaded!');
-                // await socketConnection();
-                // Logger.info('Sockets loaded!');
-                (0, jobs_1.default)();
-                logger_1.default.info('Cron Jobs loaded!');
-                return [2 /*return*/];
+                response = _a.sent();
+                return [2 /*return*/, response.data];
+            case 2:
+                error_1 = _a.sent();
+                console.error(error_1);
+                throw error_1;
+            case 3: return [2 /*return*/];
         }
     });
-}); });
+}); };
+exports.callApi = callApi;

@@ -48,6 +48,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var typedi_1 = require("typedi");
 var config_1 = __importDefault(require("../config"));
 var ethers_1 = require("ethers");
+var api_1 = require("../helpers/api");
 var QueryService = /** @class */ (function () {
     function QueryService() {
         var _this = this;
@@ -79,12 +80,12 @@ var QueryService = /** @class */ (function () {
             var result = "List of available commands are\n";
             Object.entries(_this.validCommands).map(function (_a) {
                 var key = _a[0], value = _a[1];
-                result += "\n".concat(key, "\n\tDesc  :\t").concat(value.desc, "\n\tUsage :\t").concat(value.usage);
+                result += "\n".concat(key, "\n\tDesc  :\t").concat(value.desc, "\n\tUsage :\t").concat(value.usage, "\n");
             });
             return { success: true, result: result, err: null };
         };
         this.crChainId = function (commandArgs) {
-            return { success: true, result: "ChainId of ".concat(config_1.default.network, " Network:\t").concat(config_1.default.chainId), err: null };
+            return { success: true, result: "ChainId of ".concat(config_1.default.network, " Network: ").concat(config_1.default.chainId), err: null };
         };
         this.crLatestBlock = function (commandArgs) { return __awaiter(_this, void 0, void 0, function () {
             var provider, latestBlock, err_1;
@@ -96,7 +97,7 @@ var QueryService = /** @class */ (function () {
                         return [4 /*yield*/, provider.getBlockNumber()];
                     case 1:
                         latestBlock = _a.sent();
-                        return [2 /*return*/, { success: true, result: "Latest Block of ".concat(config_1.default.network, " Network:\t").concat(latestBlock), err: null }];
+                        return [2 /*return*/, { success: true, result: "Latest Block of ".concat(config_1.default.network, " Network: ").concat(latestBlock), err: null }];
                     case 2:
                         err_1 = _a.sent();
                         console.log(err_1);
@@ -116,7 +117,7 @@ var QueryService = /** @class */ (function () {
                         return [4 /*yield*/, provider.getBalance(commandArgs[2])];
                     case 1:
                         balance = _a.sent();
-                        return [2 /*return*/, { success: true, result: "Balance:\t".concat(balance / 1e18, " ").concat(config_1.default.unit), err: null }];
+                        return [2 /*return*/, { success: true, result: "Balance: ".concat(balance / 1e18, " ").concat(config_1.default.unit), err: null }];
                     case 2:
                         err_2 = _a.sent();
                         console.log(err_2);
@@ -135,10 +136,90 @@ var QueryService = /** @class */ (function () {
                         return [4 /*yield*/, provider.getTransactionCount(commandArgs[2])];
                     case 1:
                         txCount = _a.sent();
-                        return [2 /*return*/, { success: true, result: "Transaction Count:\t".concat(txCount), err: null }];
+                        return [2 /*return*/, { success: true, result: "Transaction Count: ".concat(txCount), err: null }];
                     case 2:
                         err_3 = _a.sent();
                         return [2 /*return*/, { success: false, result: null, err: 'Unable to get Transaction Count 😖' }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.crFilToEth = function (commandArgs) { return __awaiter(_this, void 0, void 0, function () {
+            var url, body, res, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        url = config_1.default.zondaxURL + 'tools/convert/address';
+                        body = {
+                            destination_format: 'eth',
+                            value: commandArgs[2],
+                        };
+                        return [4 /*yield*/, (0, api_1.callApi)(url, config_1.default.zondaxToken, body)];
+                    case 1:
+                        res = _a.sent();
+                        return [2 /*return*/, { success: true, result: "Eth Conversion: ".concat(res), err: null }];
+                    case 2:
+                        err_4 = _a.sent();
+                        return [2 /*return*/, { success: false, result: null, err: 'Unable to Convert 😖' }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.crEthToFil = function (commandArgs) { return __awaiter(_this, void 0, void 0, function () {
+            var url, body, res, err_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        url = config_1.default.zondaxURL + 'tools/convert/address';
+                        body = {
+                            destination_format: 'fil',
+                            value: commandArgs[2],
+                        };
+                        return [4 /*yield*/, (0, api_1.callApi)(url, config_1.default.zondaxToken, body)];
+                    case 1:
+                        res = _a.sent();
+                        return [2 /*return*/, { success: true, result: "Fil Conversion: ".concat(res), err: null }];
+                    case 2:
+                        err_5 = _a.sent();
+                        return [2 /*return*/, { success: false, result: null, err: 'Unable to Convert 😖' }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.crAccTx = function (commandArgs) { return __awaiter(_this, void 0, void 0, function () {
+            var url, res, err_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        url = config_1.default.zondaxURL + "transactions/address/".concat(commandArgs[2]);
+                        return [4 /*yield*/, (0, api_1.callApi)(url, config_1.default.zondaxToken, {})];
+                    case 1:
+                        res = _a.sent();
+                        return [2 /*return*/, { success: true, result: res.Transactions, err: null }];
+                    case 2:
+                        err_6 = _a.sent();
+                        return [2 /*return*/, { success: false, result: null, err: 'Unable to Get Transactions 😖' }];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.crTxFromHash = function (commandArgs) { return __awaiter(_this, void 0, void 0, function () {
+            var url, res, err_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        url = config_1.default.zondaxURL + "transactions/hash/".concat(commandArgs[2]);
+                        return [4 /*yield*/, (0, api_1.callApi)(url, config_1.default.zondaxToken, {})];
+                    case 1:
+                        res = _a.sent();
+                        return [2 /*return*/, { success: true, result: res.Transactions, err: null }];
+                    case 2:
+                        err_7 = _a.sent();
+                        return [2 /*return*/, { success: false, result: null, err: 'Unable to Get Transaction 😖' }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -173,6 +254,26 @@ var QueryService = /** @class */ (function () {
                 desc: 'List transaction count of an Account',
                 usage: '/txCount/<EVM_COMPATIBLE_ADDRESS>',
                 func: this.crTxCount,
+            },
+            filToEth: {
+                desc: 'Convert an address from Fil to Eth format',
+                usage: '/filToEth/<FIL_ADDRESS>',
+                func: this.crFilToEth,
+            },
+            ethToFil: {
+                desc: 'Convert an address from Eth to FIL format',
+                usage: '/ethToFil/<EVM_COMPATIBLE_ADDRESS>',
+                func: this.crEthToFil,
+            },
+            accTx: {
+                desc: 'Get Transactions of an address',
+                usage: '/accTx/<EVM_COMPATIBLE_ADDRESS or FIL_ADDRESS>',
+                func: this.crAccTx,
+            },
+            txFromHash: {
+                desc: 'Get Transaction from tx hash',
+                usage: '/txFromHash/<txHash>',
+                func: this.crTxFromHash,
             },
         };
     }

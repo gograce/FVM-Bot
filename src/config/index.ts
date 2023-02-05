@@ -33,4 +33,10 @@ export default {
   botAddr: '0x7B2880C0aC607cFea7cE67DAb0F8f562Cee73f76',
   //bot private key
   botAccPvtKey: process.env.PRIVATE_KEY || '',
+  //Zondax API URL
+  zondaxURL: 'https://api.zondax.ch/fil/data/v1/hyperspace/',
+  //Zondax Token
+  zondaxToken: process.env.ZONDAX_TOKEN || '',
+  //Push chat webhook URL
+  botWebhookURL: 'https://push-bot-webhook.onrender.com/',
 };

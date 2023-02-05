@@ -6,18 +6,18 @@ import { decryptConversation } from '../helpers/crypto';
 
 const botAddr = config.botAddr;
 
-let pvtKey: string | undefined = "",
-	chatUser = {};
+let pvtKey: string | undefined = '',
+  chatUser = {};
 
-export default async() => {
+export default async () => {
   try {
-	if(pvtKey === ""){
-		pvtKey = await getPgpKey();
-	chatUser = await PushAPI.user.get({
-		account: botAddr,
-		env: "prod",
-	});
-	}
+    if (pvtKey === '') {
+      pvtKey = await getPgpKey();
+      chatUser = await PushAPI.user.get({
+        account: botAddr,
+        env: 'prod',
+      });
+    }
     const socket = io('https://backend.epns.io', {
       query: {
         did: `eip155:${botAddr}`,
@@ -34,8 +34,8 @@ export default async() => {
 
     socket.on('CHATS', async (chat) => {
       try {
-		console.log(chat);
-		console.log(pvtKey);
+        console.log(chat);
+        console.log(pvtKey);
         if (pvtKey === '') {
           pvtKey = await getPgpKey();
         }
@@ -51,9 +51,9 @@ export default async() => {
           account: botAddr,
           env: 'prod',
         });
-		console.log(responseReqs);
+        console.log(responseReqs);
         const reqsArray: any = getRequestsAddrArray(responseReqs);
-		console.log(reqsArray);
+        console.log(reqsArray);
         if (reqsArray.length > 0 && reqsArray.includes(chat.fromDID)) {
           await approveAndSendIntroMsg(chat, pvtKey);
         } else {
@@ -63,9 +63,9 @@ export default async() => {
             pgpPrivateKey: pvtKey,
             env: 'prod',
           });
-		  console.log(response);
+          console.log(response);
           fetchResAndSend(chat, response[0].messageContent, pvtKey);
-		  console.log("sent!!!");
+          console.log('sent!!!');
         }
       } catch (err) {
         console.log(err);
