@@ -162,7 +162,7 @@ export default class QueryService {
     try {
       const url = config.zondaxURL + `transactions/address/${commandArgs[2]}`;
       const res = await callApi(url, config.zondaxToken, {});
-      return { success: true, result: res.Transactions, err: null };
+      return { success: true, result: JSON.stringify(res.Transactions), err: null };
     } catch (err) {
       return { success: false, result: null, err: 'Unable to Get Transactions 😖' };
     }
@@ -172,7 +172,7 @@ export default class QueryService {
     try {
       const url = config.zondaxURL + `transactions/hash/${commandArgs[2]}`;
       const res = await callApi(url, config.zondaxToken, {});
-      return { success: true, result: res.Transactions, err: null };
+      return { success: true, result: JSON.stringify(res.Transactions), err: null };
     } catch (err) {
       return { success: false, result: null, err: 'Unable to Get Transaction 😖' };
     }
