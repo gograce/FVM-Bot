@@ -11,12 +11,20 @@ const { botAddr } = require("./config");
 const { decryptConversation } = require("./decrypt");
 
 const express = require("express");
+const { postCmd } = require("./api");
 
 const app = express();
 
 // Create GET request
-app.get("/", (req, res) => {
-	res.send("Express on Vercel");
+app.get("/", async (req, res) => {
+	try {
+		const response = await postCmd("/intro");
+		console.log(response);
+		res.status(200).send(response);
+	} catch (err) {
+		console.log(err.message);
+		res.status(200).send("fuck");
+	}
 });
 
 // Initialize server
