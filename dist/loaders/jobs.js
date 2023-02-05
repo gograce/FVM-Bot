@@ -66,21 +66,14 @@ var cron = __importStar(require("node-cron"));
 var api_1 = require("../helpers/api");
 var config_1 = __importDefault(require("../config"));
 var logger_1 = __importDefault(require("./logger"));
-exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        // schedule the cron job to run every 5 minutes
-        // Hack to prevent webhook to go in sleep mode
-        cron.schedule('*/1 * * * *', function () { return __awaiter(void 0, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, (0, api_1.callApi)(config_1.default.botWebhookURL, '', {})];
-                    case 1:
-                        _a.sent();
-                        logger_1.default.info('Pinged Push Chat WebHook');
-                        return [2 /*return*/];
-                }
-            });
-        }); });
-        return [2 /*return*/];
-    });
-}); });
+exports.default = (function () {
+    // schedule the cron job to run every 5 minutes
+    // Hack to prevent webhook to go in sleep mode
+    cron.schedule('*/1 * * * *', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            (0, api_1.callApi)(config_1.default.botWebhookURL, '', {});
+            logger_1.default.info('Pinged Push Chat WebHook');
+            return [2 /*return*/];
+        });
+    }); });
+});
