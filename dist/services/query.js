@@ -198,7 +198,7 @@ var QueryService = /** @class */ (function () {
                         return [4 /*yield*/, (0, api_1.callApi)(url, config_1.default.zondaxToken, {})];
                     case 1:
                         res = _a.sent();
-                        return [2 /*return*/, { success: true, result: JSON.stringify(res.Transactions), err: null }];
+                        return [2 /*return*/, { success: true, result: JSON.stringify(res.Transactions, null, 2), err: null }];
                     case 2:
                         err_6 = _a.sent();
                         return [2 /*return*/, { success: false, result: null, err: 'Unable to Get Transactions 😖' }];
@@ -216,7 +216,7 @@ var QueryService = /** @class */ (function () {
                         return [4 /*yield*/, (0, api_1.callApi)(url, config_1.default.zondaxToken, {})];
                     case 1:
                         res = _a.sent();
-                        return [2 /*return*/, { success: true, result: JSON.stringify(res.Transactions), err: null }];
+                        return [2 /*return*/, { success: true, result: JSON.stringify(res.Transactions, null, 2), err: null }];
                     case 2:
                         err_7 = _a.sent();
                         return [2 /*return*/, { success: false, result: null, err: 'Unable to Get Transaction 😖' }];
