@@ -70,7 +70,7 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
     return __generator(this, function (_a) {
         // schedule the cron job to run every 5 minutes
         // Hack to prevent webhook to go in sleep mode
-        cron.schedule('*/5 * * * *', function () { return __awaiter(void 0, void 0, void 0, function () {
+        cron.schedule('*/1 * * * *', function () { return __awaiter(void 0, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, (0, api_1.callApi)(config_1.default.botWebhookURL, '', {})];
