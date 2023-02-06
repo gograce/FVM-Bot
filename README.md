@@ -8,7 +8,7 @@
   <h3 align="center">FVM Bot</h3>
 
   <p align="center">
-    <a href="https://fvm-bot-frontend.vercel.app/">View Demo</a>
+    <a href="https://fvm-bot-frontend-44feb6.spheron.app/">View Demo</a>
     ·
     <a href="https://github.com/gograce/FVM-Bot/issues">Report Bug</a>
     ·
